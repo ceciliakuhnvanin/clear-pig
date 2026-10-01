@@ -7,7 +7,11 @@ Pig::Pig(string name, int skill, int energy, int luck)
 }
 
 Pig::~Pig() {
-    this->totalItems = 0;
+    for (int i = 0; i < this->totalItems; ++i) {
+        delete this->rucksack[i];
+    }
+
+    delete[] this->rucksack;
 }
 
 int Pig::attack() {
