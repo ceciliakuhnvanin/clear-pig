@@ -13,7 +13,7 @@ class Pig : public Character {
         ~Pig();
 
         int attack() override;
-        bool useLuck();
+        virtual bool useLuck();
 
         void displayInfo();
 };
