@@ -2,10 +2,13 @@
 
 Pig::Pig(string name, int skill, int energy, int luck)
     : Character(name, skill, energy, luck) {
+        this->totalItems = 0;
         // this->rucksack = rucksack;
 }
 
-Pig::~Pig() {}
+Pig::~Pig() {
+    this->totalItems = 0;
+}
 
 int Pig::attack() {
     int demage = 2;
@@ -44,9 +47,35 @@ bool Pig::useLuck() {
     return success;
 }
 
+void Pig::useItem() {}
+
+void Pig::storeItem(Item *item) {
+    if (totalItems < CAPACITY) 
+        rucksack[totalItems++] = item;
+}
+
+void Pig::removeItem(int index) {
+    if (index < 0 || index >= totalItems)
+        return;
+
+    delete rucksack[totalItems];
+    rucksack[totalItems] = nullptr;
+
+    for (int i = index; i < totalItems-1; i++) {
+        rucksack[i] = rucksack[i+1];
+    }
+
+    rucksack[totalItems-1] = nullptr;
+    totalItems--;
+}
+
 void Pig::displayInfo() {
     cout << "Nome: " << getName() << endl
         << "PD: " << getSkill() << endl
         << "PV: " << getEnergy() << endl
         << "Iniciativa: " << getLuck() << endl;
+    for (int i = 0; i < totalItems; i++) {
+        cout << "index: " << i << endl;
+        rucksack[i]->detail();
+    }
 }
